@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5f;
-    private float moveInput;
-    public Transform groundCheck;
-    public LayerMask groundLayer;
-
     private Rigidbody2D rb;
     private bool isGrounded;
+    private float moveInput;
+    public float speed = 5f;
+    public Transform groundCheck;
+    public LayerMask groundLayer;
+    public Transform player;
+    public float jump = 15f;
+    public Transform levelParent;
 
-    public float jump = 5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,11 +26,12 @@ public class PlayerController : MonoBehaviour
         Move();
         Jump();
         CheckIfGrounded();
+        ApplyCustomGravity();
     }
 
     void Move()
     {
-        float moveInput = Input.GetAxis("Horizontal"); 
+        moveInput = Input.GetAxis("Horizontal"); 
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
     }
 
@@ -44,7 +46,27 @@ public class PlayerController : MonoBehaviour
     void CheckIfGrounded()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 1f, groundLayer);
-        Debug.Log("The ground check position is" +groundCheck.position + "and isGrounded is " + isGrounded);
+        //Debug.Log("The ground check position is" +groundCheck.position + "and isGrounded is " + isGrounded);
+    }
+
+    void ApplyCustomGravity()
+    {
+        // Get the current rotation angle of the level
+        float angle = levelParent.rotation.eulerAngles.z;
+        Vector2 gravityDirection;
+
+        // Calculate gravity direction based on the rotation of the level
+        if (angle >= 0 && angle <= 90)
+        {
+            gravityDirection = new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad), -Mathf.Cos(angle * Mathf.Deg2Rad));
+        }
+        else
+        {
+            gravityDirection = new Vector2(-Mathf.Sin(angle * Mathf.Deg2Rad), -Mathf.Cos(angle * Mathf.Deg2Rad));
+        }
+
+        // Apply custom gravity force to accelerate the fall as the level rotates
+        rb.AddForce(gravityDirection * Physics2D.gravity.magnitude, ForceMode2D.Force);
     }
 
 }
