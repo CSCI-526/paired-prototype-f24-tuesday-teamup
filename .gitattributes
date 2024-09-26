@@ -1,0 +1,8 @@
+# Normalize line endings for all text files
+* text=auto
+
+# Force .unity files and other Unity-related assets to use LF (Unix-style line endings)
+*.unity text eol=lf
+*.meta text eol=lf
+*.mat text eol=lf
+*.cs text eol=lf
