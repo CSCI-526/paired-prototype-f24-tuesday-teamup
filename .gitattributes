@@ -1,5 +1,0 @@
-# Automatically normalize line endings for all text files
-* text=auto
-
-# Force .unity files to use Unix-style LF endings
-*.unity text eol=lf
