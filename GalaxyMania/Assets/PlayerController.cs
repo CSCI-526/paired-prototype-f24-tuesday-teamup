@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     void Move()
     {
         moveInput = Input.GetAxis("Horizontal"); 
