@@ -1,17 +1,30 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // Make sure to include this for UI manipulation
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class WinMessageHandler : MonoBehaviour
 {
     public TextMeshProUGUI winText; // Reference to the UI Text element
     public Color targetColor = new Color(111f / 255f, 41f / 255f, 26f / 255f, 1f); // Set target color
     public float colorTolerance = 0.02f; // Tolerance for color matching
+    private bool wonGame = false;
 
     private void Start()
     {
         // Initially hide the win message
         winText.text = "";
+    }
+
+    void Update()
+    {
+        if (Input.anyKeyDown && wonGame)
+        {
+            // Reload the current active scene
+            Time.timeScale = 1f;  // Unfreeze the game
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            wonGame = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -29,6 +42,7 @@ public class WinMessageHandler : MonoBehaviour
                 // Display the win message
                 winText.text = "You Win!";
                 Time.timeScale = 0; // Optionally pause the game
+                wonGame = true;
             }
         }
     }
