@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Teleport : MonoBehaviour
 {
-    public float teleportHeightOffset = 1f; // Height offset after teleporting (optional, to avoid clipping)
+    public float teleportHeightOffset = 1f; // Height offset after teleporting
     public float colorTolerance = 0.02f; // Tolerance for color matching
     public float moveThreshold = 5f; // Distance required to reset teleport
     private bool hasTeleported = false;
@@ -67,8 +67,6 @@ public class Teleport : MonoBehaviour
 
     GameObject FindObjectWithColor(Color color, GameObject currentObject)
     {
-        Debug.Log("Searching for an object with the target color...");
-
         // Find all SpriteRenderers in the scene
         SpriteRenderer[] allSpriteRenderers = FindObjectsOfType<SpriteRenderer>();
 

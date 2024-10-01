@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     public Transform levelParent;
     private bool isGameOver = false; // Track if the game is over
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -62,7 +61,7 @@ public class PlayerController : MonoBehaviour
     void CheckIfPlayerFell()
     {
         // If the player falls below a certain Y position, trigger game over
-        if (transform.position.y < -30f)  // Adjust this value depending on your level's height
+        if (transform.position.y < -30f)
         {
             GameOver();
         }
