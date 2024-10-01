@@ -9,11 +9,11 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private bool isGrounded;
     private float moveInput;
-    public float speed = 5f;
+    public float speed = 10f;
     public Transform groundCheck;
     public LayerMask groundLayer;
     public Transform player;
-    public float jump = 15f;
+    public float jump = 20f;
     public Transform levelParent;
     private bool isGameOver = false; // Track if the game is over
 
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
     void CheckIfPlayerFell()
     {
         // If the player falls below a certain Y position, trigger game over
-        if (transform.position.y < -20f)  // Adjust this value depending on your level's height
+        if (transform.position.y < -30f)  // Adjust this value depending on your level's height
         {
             GameOver();
         }
