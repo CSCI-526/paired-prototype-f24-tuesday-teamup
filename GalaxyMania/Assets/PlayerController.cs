@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
+        Debug.Log(isGrounded);
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jump);
@@ -76,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
     void CheckIfGrounded()
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 1f, groundLayer);
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 2f, groundLayer);
         //Debug.Log("The ground check position is" +groundCheck.position + "and isGrounded is " + isGrounded);
     }
 

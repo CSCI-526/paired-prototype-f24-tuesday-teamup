@@ -6,10 +6,21 @@ public class Teleport : MonoBehaviour
 {
     public float teleportHeightOffset = 1f; // Height offset after teleporting (optional, to avoid clipping)
     public float colorTolerance = 0.02f; // Tolerance for color matching
+    public float moveThreshold = 5f; // Distance required to reset teleport
     private bool hasTeleported = false;
+    private Vector3 lastTeleportedPosition; // Store position after teleport
 
     // Define your target color
     Color targetColor = new Color(105f / 255f, 45f / 255f, 195f / 255f, 1f);
+
+    void Update()
+    {
+        // Check if the object has moved far enough from the last teleported position to reset teleportation
+        if (hasTeleported && Vector3.Distance(transform.position, lastTeleportedPosition) > moveThreshold)
+        {
+            hasTeleported = false; // Reset the teleportation flag
+        }
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -45,8 +56,9 @@ public class Teleport : MonoBehaviour
                         // Teleport the object (sphere) to the calculated position
                         transform.position = targetPosition;
 
-                        // Mark the teleport as completed to prevent further teleports
+                        // Mark the teleport as completed and store the last teleported position
                         hasTeleported = true;
+                        lastTeleportedPosition = transform.position;
                     }
                 }
             }
