@@ -28,21 +28,21 @@ public class Teleport : MonoBehaviour
 
                 if (targetObject != null)
                 {
-                    // Get the width of the platform from the target object's SpriteRenderer bounds
+                    // Get the SpriteRenderer and bounds of the target object
                     SpriteRenderer targetRenderer = targetObject.GetComponent<SpriteRenderer>();
                     if (targetRenderer != null)
                     {
-                        // Teleport the sphere to the target object's position
-                        Vector3 targetPosition = targetObject.transform.position;
+                        // Get the right side of the platform in world space
+                        Vector3 platformRightSide = targetRenderer.bounds.max; // Get the rightmost point in world space
+                        
+                        // Calculate the direction the platform is facing (right direction of the platform)
+                        Vector3 platformRightDirection = targetObject.transform.right; // Local right direction (based on rotation)
 
-                        // Get the bounds of the target object to calculate its width
-                        float platformWidth = targetRenderer.bounds.size.x;
+                        // Offset the teleportation position towards the right side of the platform
+                        Vector3 targetPosition = platformRightSide + (platformRightDirection * (targetRenderer.bounds.size.x / 2));
+                        targetPosition.y += teleportHeightOffset; // Adjust height to avoid clipping into the platform
 
-                        // Adjust the x position to teleport to the right side of the platform
-                        targetPosition.x += platformWidth / 2;  // Move to the right side
-                        targetPosition.y += teleportHeightOffset; // Move slightly above the platform (optional)
-
-                        // Set the sphere's position to the new target object position
+                        // Teleport the object (sphere) to the calculated position
                         transform.position = targetPosition;
 
                         // Mark the teleport as completed to prevent further teleports
